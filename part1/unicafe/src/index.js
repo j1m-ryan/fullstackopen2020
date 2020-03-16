@@ -11,13 +11,38 @@ const Button = ({ text, handleClick }) => {
 
 const StatisticsHeader = () => <h1>statistics</h1>;
 // display stats
-const Statistics = ({ statName, statVal }) => {
+const Statistic = ({ statName, statVal }) => {
   return (
     <>
       <span>
         {statName} {statVal}
       </span>
       <br />
+    </>
+  );
+};
+const Statistics = props => {
+  const good = props.good;
+  const neutral = props.neutral;
+  const bad = props.bad;
+
+  if (good === 0 && bad === 0 && neutral === 0) {
+    return <>No feedback given</>;
+  }
+  return (
+    <>
+      <Statistic statName="good" statVal={good} />
+      <Statistic statName="neutral" statVal={neutral} />
+      <Statistic statName="bad" statVal={bad} />
+      <Statistic statName="all" statVal={bad + good + neutral} />
+      <Statistic
+        statName="average"
+        statVal={(good - bad) / (bad + good + neutral)}
+      />
+      <Statistic
+        statName="postive"
+        statVal={(good * 100) / (bad + good + neutral)}
+      />
     </>
   );
 };
@@ -35,18 +60,7 @@ const App = () => {
       <Button text="neutral" handleClick={() => setNeutral(neutral + 1)} />
       <Button text="bad" handleClick={() => setBad(bad + 1)} />
       <StatisticsHeader />
-      <Statistics statName="good" statVal={good} />
-      <Statistics statName="neutral" statVal={neutral} />
-      <Statistics statName="bad" statVal={bad} />
-      <Statistics statName="all" statVal={bad + good + neutral} />
-      <Statistics
-        statName="average"
-        statVal={(good - bad) / (bad + good + neutral)}
-      />
-      <Statistics
-        statName="postive"
-        statVal={(good * 100) / (bad + good + neutral)}
-      />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </>
   );
 };
