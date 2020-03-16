@@ -10,7 +10,7 @@ const Button = ({ text, handleClick }) => {
 };
 
 const StatisticsHeader = () => <h1>statistics</h1>;
-
+// display stats
 const Statistics = ({ statName, statVal }) => {
   return (
     <>
