@@ -1,26 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Course from "./Components/Course";
 
 const Courses = props => {
-  return props.course.map(c => <Course course={c} />);
-};
-
-const Course = props => {
-  const sum = props.course.parts.reduce((s, p) => {
-    return (s += p.exercises);
-  }, 0);
-
-  return (
-    <>
-      <h1>{props.course.name}</h1>
-      {props.course.parts.map(p => (
-        <p>
-          {p.name} {p.exercises}
-        </p>
-      ))}
-      <strong>total of {sum} exercises</strong>
-    </>
-  );
+  return props.course.map((c, i) => <Course course={c} key={i} />);
 };
 
 const App = () => {
