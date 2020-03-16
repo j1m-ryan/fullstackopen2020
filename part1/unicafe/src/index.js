@@ -14,9 +14,9 @@ const StatisticsHeader = () => <h1>statistics</h1>;
 const Statistics = ({ statName, statVal }) => {
   return (
     <>
-      <l>
+      <span>
         {statName} {statVal}
-      </l>
+      </span>
       <br />
     </>
   );
@@ -38,6 +38,15 @@ const App = () => {
       <Statistics statName="good" statVal={good} />
       <Statistics statName="neutral" statVal={neutral} />
       <Statistics statName="bad" statVal={bad} />
+      <Statistics statName="all" statVal={bad + good + neutral} />
+      <Statistics
+        statName="average"
+        statVal={(good - bad) / (bad + good + neutral)}
+      />
+      <Statistics
+        statName="postive"
+        statVal={(good * 100) / (bad + good + neutral)}
+      />
     </>
   );
 };
