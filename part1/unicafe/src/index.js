@@ -5,6 +5,7 @@ const Header = () => {
   return <h1>give feedback</h1>;
 };
 
+//button refactor
 const Button = ({ text, handleClick }) => {
   return <button onClick={handleClick}>{text}</button>;
 };
