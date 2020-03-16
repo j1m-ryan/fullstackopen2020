@@ -10,13 +10,19 @@ const App = props => {
   const [selected, setSelected] = useState(0);
   const getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
   const [numVotes, setVotes] = useState(new Uint8Array(props.anecdotes.length));
-
+  const [bestQuote, setBest] = useState(0);
   const incrementVotes = () => {
     numVotes[selected] += 1;
     setVotes([...numVotes]);
+    findBest();
+  };
+  const findBest = () => {
+    let max = Math.max(...numVotes);
+    setBest(numVotes.indexOf(max));
   };
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <div>{props.anecdotes[selected]}</div>
 
       <Votes votes={numVotes[selected]} />
@@ -30,8 +36,11 @@ const App = props => {
             randInt = getRandomInt(props.anecdotes.length);
           }
           setSelected(randInt);
+          findBest();
         }}
       />
+      <h1>Anecdote with the most votes</h1>
+      <div>{props.anecdotes[bestQuote]}</div>
     </>
   );
 };
