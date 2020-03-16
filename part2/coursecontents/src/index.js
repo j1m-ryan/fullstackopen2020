@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 const Course = props => {
+  let sum = 0;
+  props.course.parts.forEach(p => (sum += p.exercises));
   return (
     <>
       <h1>{props.course.name}</h1>
@@ -10,6 +12,7 @@ const Course = props => {
           {p.name} {p.exercises}
         </p>
       ))}
+      <strong>total of {sum} exercises</strong>
     </>
   );
 };
@@ -33,6 +36,11 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3
+      },
+      {
+        name: "redux",
+        exercises: 14,
+        id: 4
       }
     ]
   };
