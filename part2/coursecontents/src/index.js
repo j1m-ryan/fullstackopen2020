@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 const Course = props => {
-  let sum = 0;
-  props.course.parts.forEach(p => (sum += p.exercises));
+  const sum = props.course.parts.reduce((s, p) => {
+    return (s += p.exercises);
+  }, 0);
+
   return (
     <>
       <h1>{props.course.name}</h1>
