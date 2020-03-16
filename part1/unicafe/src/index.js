@@ -13,9 +13,12 @@ const StatisticsHeader = () => <h1>statistics</h1>;
 
 const Statistics = ({ statName, statVal }) => {
   return (
-    <p>
-      {statName} {statVal}
-    </p>
+    <>
+      <l>
+        {statName} {statVal}
+      </l>
+      <br />
+    </>
   );
 };
 
