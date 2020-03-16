@@ -14,12 +14,10 @@ const StatisticsHeader = () => <h1>statistics</h1>;
 // display stats
 const Statistic = ({ statName, statVal }) => {
   return (
-    <>
-      <span>
-        {statName} {statVal}
-      </span>
-      <br />
-    </>
+    <tr>
+      <td>{statName}</td>
+      <td>{statVal}</td>
+    </tr>
   );
 };
 const Statistics = props => {
@@ -31,20 +29,22 @@ const Statistics = props => {
     return <>No feedback given</>;
   }
   return (
-    <>
-      <Statistic statName="good" statVal={good} />
-      <Statistic statName="neutral" statVal={neutral} />
-      <Statistic statName="bad" statVal={bad} />
-      <Statistic statName="all" statVal={bad + good + neutral} />
-      <Statistic
-        statName="average"
-        statVal={(good - bad) / (bad + good + neutral)}
-      />
-      <Statistic
-        statName="postive"
-        statVal={(good * 100) / (bad + good + neutral)}
-      />
-    </>
+    <table>
+      <tbody>
+        <Statistic statName="good" statVal={good} />
+        <Statistic statName="neutral" statVal={neutral} />
+        <Statistic statName="bad" statVal={bad} />
+        <Statistic statName="all" statVal={bad + good + neutral} />
+        <Statistic
+          statName="average"
+          statVal={(good - bad) / (bad + good + neutral)}
+        />
+        <Statistic
+          statName="postive"
+          statVal={(good * 100) / (bad + good + neutral)}
+        />
+      </tbody>
+    </table>
   );
 };
 
