@@ -1,46 +1,6 @@
 import React, { useState } from "react";
-const Numbers = props => {
-  const persons = props.persons;
-  const filterWord = props.filterWord;
-  if (filterWord === "") {
-    return (
-      <>
-        <h2>Numbers</h2>
-        {persons.map((person, i) => (
-          <span key={i}>
-            {person.name} {person.number}
-            <br />
-          </span>
-        ))}
-      </>
-    );
-  } else {
-    let newObj = [];
-    console.log("newObj is a", typeof newObj);
-    for (let i = 0; i < persons.length; i++) {
-      if (persons[i].name.includes(filterWord)) {
-        console.log("person name", persons[i].name, "filterword", filterWord);
-        newObj = newObj.concat({
-          name: persons[i].name,
-          number: persons[i].number
-        });
-      }
-    }
-    console.log(newObj);
-
-    return (
-      <>
-        <h2>Numbers</h2>
-        {newObj.map((person, i) => (
-          <span key={i}>
-            {person.name} {person.number}
-            <br />
-          </span>
-        ))}
-      </>
-    );
-  }
-};
+import Title from "./Components/Title";
+import Numbers from "./Components/Numbers";
 
 const App = () => {
   const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
@@ -69,7 +29,7 @@ const App = () => {
   };
   return (
     <div>
-      <h2>Phonebook</h2>
+      <Title text="Phonebook" />
       filter shown with <input value={filterWord} onChange={handleFilter} />
       <h2>add a new</h2>
       <form>
