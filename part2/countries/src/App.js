@@ -6,8 +6,6 @@ const App = () => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    console.log("effect");
-
     const eventHandler = response => {
       setCountries(response.data);
     };
