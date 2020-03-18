@@ -4,6 +4,7 @@ import Country from "./Country";
 const DisplayListCountries = props => {
   const countries = props.countries;
   let searchTerm = props.searchTerm;
+  const api_key = props.api_key;
 
   let [countryList, setCountryList] = useState([]);
   for (let i = 0; i < countries.length; i++) {
@@ -21,7 +22,9 @@ const DisplayListCountries = props => {
   if (countryList.length >= 10) {
     return <p>too many matches, specify another filter</p>;
   } else if (countryList.length === 1) {
-    return <Country country={countryList} countries={countries} />;
+    return (
+      <Country country={countryList} countries={countries} api_key={api_key} />
+    );
   } else {
     return countryList.map((c, i) => (
       <span key={i}>

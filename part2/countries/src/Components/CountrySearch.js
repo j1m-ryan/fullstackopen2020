@@ -4,6 +4,7 @@ import DisplayListCountries from "./DisplayListCountries";
 const CountrySearch = props => {
   const [searchTerm, setInput] = useState("");
   const countries = props.countries;
+  const api_key = props.api_key;
 
   const handleCountries = event => {
     setInput(event.target.value);
@@ -14,7 +15,11 @@ const CountrySearch = props => {
       find countries
       <input onChange={handleCountries} value={searchTerm} />
       <br />
-      <DisplayListCountries searchTerm={searchTerm} countries={countries} />
+      <DisplayListCountries
+        searchTerm={searchTerm}
+        countries={countries}
+        api_key={api_key}
+      />
     </>
   );
 };

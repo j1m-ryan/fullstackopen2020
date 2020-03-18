@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CountrySeach from "./Components/CountrySearch";
 import axios from "axios";
 
-const App = () => {
+const App = api_key => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const App = () => {
     promise.then(eventHandler);
   }, []);
 
-  return <CountrySeach countries={countries} />;
+  return <CountrySeach countries={countries} api_key={api_key} />;
 };
 
 export default App;

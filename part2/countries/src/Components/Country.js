@@ -1,8 +1,10 @@
 import React from "react";
+import Weather from "./Weather";
 
 const Country = props => {
   const countries = props.countries;
   const chosenCountry = props.country[0];
+  const api_key = props.api_key;
   let capital = "";
   let population = 0;
   let languages = [];
@@ -35,6 +37,7 @@ const Country = props => {
         ))}
       </ul>
       <img src={flagUrl} style={{ width: "30%" }} alt={chosenCountry} />
+      <Weather api_key={api_key} country={chosenCountry} />
     </>
   );
 };
