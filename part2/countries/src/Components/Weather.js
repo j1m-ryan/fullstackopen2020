@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Weather = props => {
   const [temperature, setTemperature] = useState(0);
-  const [api_key, setKey] = useState(props.api_key);
+  const api_key = props.api_key;
   const [imgUrl, setImageUrl] = useState("");
   const [weatherDesc, setWeatherDesc] = useState([]);
   console.log("apikey", props.api_key);
