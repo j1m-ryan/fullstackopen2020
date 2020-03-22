@@ -27,7 +27,15 @@ const App = () => {
   const handleName = event => {
     event.preventDefault();
     if (persons.map(p => p.name).includes(newName)) {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, do you wish to update their number?`
+        )
+      ) {
+        const newP = { name: newName, number: newNumber };
+        const p = persons.find(x => x.name === newName);
+        personsService.update(p.id, newP);
+      }
     } else {
       const newPerson = {
         name: newName,

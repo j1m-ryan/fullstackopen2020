@@ -13,4 +13,11 @@ const update = (id, newObject) => {
   return axios.put(`${baseUrl}/${id}`, newObject);
 };
 
-export default { getAll, create, update };
+const remove = (id, name) => {
+  if (window.confirm(`Do you really want to delete ${name}?`)) {
+    console.log("person", id, "is removed");
+    return axios.delete(`${baseUrl}/${id}`);
+  }
+};
+
+export default { getAll, create, update, remove };
