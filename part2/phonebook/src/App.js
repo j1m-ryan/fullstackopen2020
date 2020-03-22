@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Title from "./Components/Title";
 import Numbers from "./Components/Numbers";
-import axios from "axios";
+import personsService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -10,7 +10,7 @@ const App = () => {
   const [filterWord, setFilter] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3000/persons").then(response => {
+    personsService.getAll().then(response => {
       setPersons(response.data);
     });
   }, []);
@@ -36,7 +36,7 @@ const App = () => {
 
       setPersons(persons.concat(newPerson));
 
-      axios.post("http://localhost:3000/persons", newPerson).then(response => {
+      personsService.create(newPerson).then(response => {
         console.log(response);
       });
 
