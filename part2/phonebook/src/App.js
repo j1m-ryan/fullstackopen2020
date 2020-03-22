@@ -33,8 +33,11 @@ const App = () => {
         )
       ) {
         const newP = { name: newName, number: newNumber };
-        const p = persons.find(x => x.name === newName);
 
+        const p = persons.find(x => x.name === newName);
+        if (p.id === undefined) {
+          p.id = persons.length;
+        }
         personsService.update(p.id, newP);
         persons[p.id - 1] = newP;
         setPersons([...persons]);
@@ -46,11 +49,11 @@ const App = () => {
         number: newNumber
       };
 
-      setPersons(persons.concat(newPerson));
-
       personsService.create(newPerson).then(response => {
-        console.log(response);
+        console.log("respsons is", response);
       });
+      setPersons(persons.concat(newPerson));
+      console.log("persons after person added", persons);
 
       setNewName("");
       setNewNumber("");

@@ -2,7 +2,7 @@ import React from "react";
 import Individual from "./Individual";
 
 const Numbers = props => {
-  const persons = props.persons;
+  let persons = props.persons;
   console.log("top of Numbers");
 
   const filterWord = props.filterWord;
