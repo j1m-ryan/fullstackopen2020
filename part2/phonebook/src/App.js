@@ -10,7 +10,7 @@ const App = () => {
   const [filterWord, setFilter] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then(response => {
+    axios.get("http://localhost:3000/persons").then(response => {
       setPersons(response.data);
     });
   }, []);
@@ -29,7 +29,17 @@ const App = () => {
     if (persons.map(p => p.name).includes(newName)) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      setPersons(persons.concat({ name: newName, number: newNumber }));
+      const newPerson = {
+        name: newName,
+        number: newNumber
+      };
+
+      setPersons(persons.concat(newPerson));
+
+      axios.post("http://localhost:3000/persons", newPerson).then(response => {
+        console.log(response);
+      });
+
       setNewName("");
       setNewNumber("");
     }
