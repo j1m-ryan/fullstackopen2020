@@ -34,7 +34,11 @@ const App = () => {
       ) {
         const newP = { name: newName, number: newNumber };
         const p = persons.find(x => x.name === newName);
+
         personsService.update(p.id, newP);
+        persons[p.id - 1] = newP;
+        setPersons([...persons]);
+        console.log("persons changed to", persons);
       }
     } else {
       const newPerson = {
