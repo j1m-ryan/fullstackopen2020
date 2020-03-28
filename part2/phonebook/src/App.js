@@ -18,12 +18,15 @@ const App = () => {
   const handleNameChange = event => {
     setNewName(event.target.value);
   };
+
   const handleFilter = event => {
     setFilter(event.target.value);
   };
+
   const handleNumberChange = event => {
     setNewNumber(event.target.value);
   };
+
   const handleName = event => {
     event.preventDefault();
     if (persons.map(p => p.name).includes(newName)) {
@@ -41,20 +44,14 @@ const App = () => {
         personsService.update(p.id, newP);
         persons[p.id - 1] = newP;
         setPersons([...persons]);
-        console.log("persons changed to", persons);
       }
     } else {
       const newPerson = {
         name: newName,
         number: newNumber
       };
-
-      personsService.create(newPerson).then(response => {
-        console.log("respsons is", response);
-      });
+      personsService.create(newPerson);
       setPersons(persons.concat(newPerson));
-      console.log("persons after person added", persons);
-
       setNewName("");
       setNewNumber("");
     }
