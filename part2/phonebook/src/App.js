@@ -2,12 +2,19 @@ import React, { useState, useEffect } from "react";
 import Title from "./Components/Title";
 import Numbers from "./Components/Numbers";
 import personsService from "./services/persons";
+import Notify from "../src/Notify";
+import "../src/style.css";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterWord, setFilter] = useState("");
+  const [message, setMessage] = useState(null);
+
+  setTimeout(() => {
+    setMessage(null);
+  }, 7000);
 
   useEffect(() => {
     personsService.getAll().then(response => {
@@ -43,6 +50,7 @@ const App = () => {
         }
         personsService.update(p.id, newP);
         persons[p.id - 1] = newP;
+        setMessage(`Added ${newName}`);
         setPersons([...persons]);
       }
     } else {
@@ -52,12 +60,14 @@ const App = () => {
       };
       personsService.create(newPerson);
       setPersons(persons.concat(newPerson));
+      setMessage(`Added ${newName}`);
       setNewName("");
       setNewNumber("");
     }
   };
   return (
     <div>
+      <Notify message={message} />
       <Title text="Phonebook" />
       filter shown with <input value={filterWord} onChange={handleFilter} />
       <h2>add a new</h2>
