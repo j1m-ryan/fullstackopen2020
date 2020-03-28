@@ -3,3 +3,9 @@
   background-color: blue;
   border: 2px black solid;
 }
+
+.deleted {
+  color: red;
+  background-color: blue;
+  border: 2px black solid;
+}

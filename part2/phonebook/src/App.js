@@ -14,7 +14,7 @@ const App = () => {
 
   setTimeout(() => {
     setMessage(null);
-  }, 7000);
+  }, 5000);
 
   useEffect(() => {
     personsService.getAll().then(response => {
@@ -48,7 +48,9 @@ const App = () => {
         if (p.id === undefined) {
           p.id = persons.length;
         }
-        personsService.update(p.id, newP);
+        personsService
+          .update(p.id, newP)
+          .catch(error => setMessage(`Already deleted ${newName}`));
         persons[p.id - 1] = newP;
         setMessage(`Added ${newName}`);
         setPersons([...persons]);

@@ -1,29 +1,9 @@
 {
   "persons": [
     {
-      "name": "Jim",
-      "number": "2",
-      "id": 8
-    },
-    {
-      "name": "jonh",
-      "number": "234234234",
-      "id": 9
-    },
-    {
       "name": "24234",
       "number": "342342432423",
       "id": 10
-    },
-    {
-      "name": "kfjgldf",
-      "number": "3",
-      "id": 11
-    },
-    {
-      "name": "jim2",
-      "number": "2",
-      "id": 12
     },
     {
       "name": "dsadsad",
@@ -34,6 +14,11 @@
       "name": "etfgsdfsf",
       "number": "2",
       "id": 14
+    },
+    {
+      "name": "John",
+      "number": "3",
+      "id": 16
     }
   ]
 }
