@@ -1,11 +1,11 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/api/persons";
+const baseUrl = "https://limitless-temple-04524.herokuapp.com/api/persons";
 
 const getAll = () => {
   return axios.get(baseUrl);
 };
 
-const create = newObject => {
+const create = (newObject) => {
   return axios.post(baseUrl, newObject);
 };
 
