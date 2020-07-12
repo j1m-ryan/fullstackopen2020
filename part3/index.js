@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+require("dotenv").config();
+
 const PORT = process.env.PORT || 3001;
+const mongoose = require("mongoose");
+const Person = require("./models");
 const cors = require("cors");
 app.use(express.static("build"));
 
@@ -16,24 +20,6 @@ app.use(
     ":method :url :status :response-time ms - :res[content-length] :body - :req[content-length]"
   )
 );
-
-let persons = [
-  {
-    name: "Jimmy",
-    number: "9872349873",
-    id: 1,
-  },
-  {
-    name: "Bob",
-    number: "34543535",
-    id: 2,
-  },
-  {
-    name: "Joe",
-    number: "7646735634",
-    id: 3,
-  },
-];
 
 const peopleDoesntContainName = (name) => {
   const person = persons.find((p) => p.name == name);
@@ -52,7 +38,9 @@ const generateId = () => {
 };
 
 app.get("/api/persons", (req, res) => {
-  res.json(persons);
+  Person.find({}).then((p) => {
+    res.json(p);
+  });
 });
 app.post("/api/persons", (req, res) => {
   const body = req.body;

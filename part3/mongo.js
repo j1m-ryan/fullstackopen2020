@@ -16,7 +16,10 @@ const number = process.argv[4];
 
 const url = `mongodb+srv://jim:${password}@cluster0-4pzo8.mongodb.net/test?retryWrites=true&w=majority`;
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose
+  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((r) => console.log("connected"))
+  .catch((err) => console.log("error", err));
 if (process.argv.length < 4) {
   console.log("Phonebook");
   Person.find({}).then((result) => {
