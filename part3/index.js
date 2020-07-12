@@ -21,13 +21,14 @@ app.use(
   )
 );
 
-const peopleDoesntContainName = (name) => {
-  const person = persons.find((p) => p.name == name);
+const peopleDoesntContainName = async (name) => {
+  const person = await Person.findOne({ name: name });
+
   if (person) return false;
   else return true;
 };
-const peopleDoesntContainNumber = (number) => {
-  const person = persons.find((p) => p.number == number);
+const peopleDoesntContainNumber = async (number) => {
+  const person = await Person.findOne({ number: number });
   if (person) return false;
   else return true;
 };
@@ -52,13 +53,12 @@ app.post("/api/persons", (req, res) => {
       peopleDoesntContainName(body.name) &&
       peopleDoesntContainNumber(body.number)
     ) {
-      const newPerson = {
+      const newPerson = new Person({
         name: body.name,
         number: body.number,
-        id: generateId() + 1,
-      };
-      persons.push(newPerson);
-      res.status(200).json(newPerson).end();
+      });
+      newPerson.save();
+      res.status(200).json(newPerson.toJSON()).end();
     } else {
       if (!peopleDoesntContainName(body.name)) {
         res.json({ error: "names must be unique" });
