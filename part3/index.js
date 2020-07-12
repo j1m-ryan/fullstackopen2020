@@ -4,7 +4,6 @@ const morgan = require("morgan");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3001;
-const mongoose = require("mongoose");
 const Person = require("./models");
 const cors = require("cors");
 app.use(express.static("build"));
@@ -31,11 +30,6 @@ const peopleDoesntContainNumber = async (number) => {
   const person = await Person.findOne({ number: number });
   if (person) return false;
   else return true;
-};
-
-const generateId = () => {
-  const max = Math.max(...persons.map((p) => p.id));
-  return max;
 };
 
 app.get("/api/persons", (req, res) => {
@@ -69,22 +63,21 @@ app.post("/api/persons", (req, res) => {
     }
   }
 });
-app.get("/api/persons/:id", (req, res) => {
-  const check = Number(req.params.id);
-  const person = persons.find((p) => p.id === check);
+app.get("/api/persons/:name", (req, res) => {
+  const check = req.params.name;
+  const person = Person.findOne({ name: check }).lean().exec();
   if (person) {
-    res.json(person);
+    res.json(person.toJSON());
   } else {
     res.sendStatus(404);
   }
 });
 
-app.delete("/api/persons/:id", (req, res) => {
-  const check = Number(req.params.id);
-  const person = persons.find((p) => p.id === check);
+app.delete("/api/persons/:id", async (req, res) => {
+  const check = req.params.id;
+  const person = await Person.findById(check).lean().exec();
   if (person) {
-    persons = persons.filter((p) => p.id !== check);
-    res.json(person);
+    await Person.deleteOne(person).then(res.json(person));
   } else {
     res.sendStatus(404);
   }
