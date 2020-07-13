@@ -31,6 +31,14 @@ const peopleDoesntContainNumber = async (number) => {
   if (person) return false;
   else return true;
 };
+app.get("/api/persons", async (req, res, next) => {
+  console.log("right here");
+  await Person.find({})
+    .then((p) => {
+      res.json(p).end();
+    })
+    .catch((error) => next(error));
+});
 app.get("/api/persons/:id", async (req, res, next) => {
   Person.findById(request.params.id)
     .then((p) => {
@@ -43,12 +51,6 @@ app.get("/api/persons/:id", async (req, res, next) => {
     .catch((error) => next(error));
 });
 
-app.get("/api/persons", (req, res) => {
-  console.log("right here");
-  Person.find({}).then((p) => {
-    res.json(p);
-  });
-});
 app.post("/api/persons", (req, res) => {
   const body = req.body;
 
@@ -85,7 +87,7 @@ app.delete("/api/persons/:id", async (req, res) => {
     res.sendStatus(404);
   }
 });
-
+//3.18
 app.get("/info", (req, res) => {
   Person.countDocuments({}, (err, count) => {
     if (err) {
