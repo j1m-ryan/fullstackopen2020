@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-
+const uniqueValidator = require("mongoose-unique-validator");
 const personSchema = mongoose.Schema({
-  name: String,
+  name: { type: String, required: true, unique: true },
   number: String,
 });
 const Person = mongoose.model("Person", personSchema);
-
+Person.plugin(uniqueValidator);
 if (process.argv.length < 3) {
   console.log("no password");
   process.exit(1);
