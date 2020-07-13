@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 const personSchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  number: String,
+  name: { type: String, required: true, unique: true, minlength: 3 },
+  number: { type: String, required: true, unqiue: true, minlength: 8 },
 });
 const Person = mongoose.model("Person", personSchema);
 Person.plugin(uniqueValidator);
