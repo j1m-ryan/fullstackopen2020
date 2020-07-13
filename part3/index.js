@@ -31,8 +31,20 @@ const peopleDoesntContainNumber = async (number) => {
   if (person) return false;
   else return true;
 };
+app.get("/api/persons/:id", async (req, res, next) => {
+  Person.findById(request.params.id)
+    .then((p) => {
+      if (p) {
+        response.json(p);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
+});
 
 app.get("/api/persons", (req, res) => {
+  console.log("right here");
   Person.find({}).then((p) => {
     res.json(p);
   });
@@ -63,15 +75,6 @@ app.post("/api/persons", (req, res) => {
     }
   }
 });
-app.get("/api/persons/:name", (req, res) => {
-  const check = req.params.name;
-  const person = Person.findOne({ name: check }).lean().exec();
-  if (person) {
-    res.json(person.toJSON());
-  } else {
-    res.sendStatus(404);
-  }
-});
 
 app.delete("/api/persons/:id", async (req, res) => {
   const check = req.params.id;
@@ -84,10 +87,32 @@ app.delete("/api/persons/:id", async (req, res) => {
 });
 
 app.get("/info", (req, res) => {
-  res.setHeader("Content-Type", "text/hmtl");
-  res.write(`Phonebook has info for ${persons.length} people \n`);
-  res.end(new Date().toUTCString());
+  Person.countDocuments({}, (err, count) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    res.setHeader("Content-Type", "text/hmtl");
+    res.write(`Phonebook has info for ${count} people \n`);
+    res.end(new Date().toUTCString());
+  });
 });
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint);
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
