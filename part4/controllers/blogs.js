@@ -1,28 +1,34 @@
 const blogRouter = require("express").Router();
 const Blog = require("../models/blog");
 const bodyParser = require("body-parser");
-blogRouter.use(bodyParser.json());
-
-blogRouter.get("/", (request, response) => {
-  Blog.find({}).then((blogs) => {
-    response.json(blogs);
-  });
+const jsonParser = bodyParser.json();
+blogRouter.use(jsonParser);
+blogRouter.get("/", async (request, response, next) => {
+  console.log("getting all blog posts");
+  await Blog.find({})
+    .lean()
+    .exec()
+    .then((blogs) => {
+      response.json(blogs);
+    })
+    .catch((error) => next(error));
 });
-
-blogRouter.get("/:id", (request, response, next) => {
-  Blog.findById(request.params.id)
+blogRouter.get("/:id", async (request, response, next) => {
+  console.log("getting just one blog posts");
+  await Blog.findById(request.params.id)
+    .lean()
+    .exec()
     .then((blog) => {
-      if (blog) {
-        response.json(blog);
-      } else {
-        response.status(404).end();
-      }
+      response.json(blog);
     })
     .catch((error) => next(error));
 });
 
-blogRouter.post("/", (request, response) => {
+blogRouter.post("/", async (request, response, next) => {
+  console.log("posting a blog post by", request.body.author);
   const body = request.body;
+  console.log(body);
+
   const blog = Blog({
     title: body.title,
     author: body.author,
@@ -30,15 +36,18 @@ blogRouter.post("/", (request, response) => {
     likes: body.likes,
   });
 
-  blog.save().then((result) => {
-    response.status(201).json(result);
-  });
+  await blog
+    .save()
+    .then((result) => {
+      response.status(201).json(result);
+    })
+    .catch((error) => next(error));
 });
 
 blogRouter.delete("/:id", (request, response, next) => {
   Blog.findByIdAndRemove(request.params.id)
     .then(() => {
-      response.status(204).end();
+      response.status(204).send({ status: "deleted" });
     })
     .catch((error) => next(error));
 });
