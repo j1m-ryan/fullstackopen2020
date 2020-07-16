@@ -1,3 +1,3 @@
-const morgan = require("morgan");
+const morgan = require('morgan');
 
-module.exports = morgan("tiny");
+module.exports = morgan('tiny');
