@@ -29,4 +29,27 @@ const favouriteBlog = (blogPosts) => {
   };
 };
 
-module.exports = { dummy, totalLikes, favouriteBlog };
+const mostBlogs = (blogPosts) => {
+  if (blogPosts == null || blogPosts.length == 0) return {};
+  const myMap = new Map();
+
+  blogPosts.forEach((e) => {
+    if (myMap.has(e.author)) {
+      myMap.set(e.author, 1 + myMap.get(e.author));
+    } else {
+      myMap.set(e.author, 1);
+    }
+  });
+
+  let maxPosts = 0;
+  let authorWithMostPosts;
+  for (const author of myMap) {
+    if (myMap.get(author[0]) > maxPosts) {
+      maxPosts = author[1];
+      authorWithMostPosts = author[0];
+    }
+  }
+  return { author: authorWithMostPosts, blogs: myMap.get(authorWithMostPosts) };
+};
+
+module.exports = { dummy, totalLikes, favouriteBlog, mostBlogs };
