@@ -52,4 +52,27 @@ const mostBlogs = (blogPosts) => {
   return { author: authorWithMostPosts, blogs: myMap.get(authorWithMostPosts) };
 };
 
-module.exports = { dummy, totalLikes, favouriteBlog, mostBlogs };
+const mostLikes = (blogPosts) => {
+  if (blogPosts == null || blogPosts.length == 0) return {};
+  const myMap = new Map();
+
+  blogPosts.forEach((e) => {
+    if (myMap.has(e.author)) {
+      myMap.set(e.author, e.likes + myMap.get(e.author));
+    } else {
+      myMap.set(e.author, 0 + e.likes);
+    }
+  });
+
+  let mostLikesFromAnAuthor = 0;
+  let authorWithMostLikes;
+  for (const author of myMap) {
+    if (myMap.get(author[0]) > mostLikesFromAnAuthor) {
+      mostLikesFromAnAuthor = author[1];
+      authorWithMostLikes = author[0];
+    }
+  }
+  return { author: authorWithMostLikes, likes: myMap.get(authorWithMostLikes) };
+};
+
+module.exports = { dummy, totalLikes, favouriteBlog, mostBlogs, mostLikes };
