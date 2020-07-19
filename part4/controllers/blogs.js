@@ -21,7 +21,10 @@ blogRouter.post('/', async (request, response) => {
   console.log('posting a blog post by', request.body.author);
   const body = request.body;
   console.log(body);
+  if (body.title == undefined || body.url == undefined) {
+    return response.sendStatus(400)
 
+  }
   const blog = Blog({
     title: body.title,
     author: body.author,
