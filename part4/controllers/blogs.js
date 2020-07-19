@@ -37,12 +37,11 @@ blogRouter.post('/', async (request, response) => {
 
 });
 
-blogRouter.delete('/:id', (request, response, next) => {
-  Blog.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).send({ status: 'deleted' });
-    })
-    .catch((error) => next(error));
+blogRouter.delete('/:id', async (request, response) => {
+  await Blog.findByIdAndRemove(request.params.id)
+
+  return response.status(204).send({ status: 'deleted' });
+
 });
 
 blogRouter.put('/:id', (request, response, next) => {
