@@ -1,27 +1,26 @@
 const blogRouter = require('express').Router();
 const Blog = require('../models/blog');
+require("express-async-errors");
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 blogRouter.use(jsonParser);
-blogRouter.get('/', async (request, response, next) => {
+blogRouter.get('/', async (request, response,) => {
   console.log('getting all blog posts');
-  await Blog.find({})
-      .lean()
-      .exec()
-      .then((blogs) => {
-        response.json(blogs);
-      })
-      .catch((error) => next(error));
+  const blogs = await Blog.find({})
+    .lean()
+    .exec()
+  response.status(200).json(blogs);
+
 });
 blogRouter.get('/:id', async (request, response, next) => {
   console.log('getting just one blog posts');
   await Blog.findById(request.params.id)
-      .lean()
-      .exec()
-      .then((blog) => {
-        response.json(blog);
-      })
-      .catch((error) => next(error));
+    .lean()
+    .exec()
+    .then((blog) => {
+      response.json(blog);
+    })
+    .catch((error) => next(error));
 });
 
 blogRouter.post('/', async (request, response, next) => {
@@ -37,19 +36,19 @@ blogRouter.post('/', async (request, response, next) => {
   });
 
   await blog
-      .save()
-      .then((result) => {
-        response.status(201).json(result);
-      })
-      .catch((error) => next(error));
+    .save()
+    .then((result) => {
+      response.status(201).json(result);
+    })
+    .catch((error) => next(error));
 });
 
 blogRouter.delete('/:id', (request, response, next) => {
   Blog.findByIdAndRemove(request.params.id)
-      .then(() => {
-        response.status(204).send({status: 'deleted'});
-      })
-      .catch((error) => next(error));
+    .then(() => {
+      response.status(204).send({ status: 'deleted' });
+    })
+    .catch((error) => next(error));
 });
 
 blogRouter.put('/:id', (request, response, next) => {
@@ -62,11 +61,11 @@ blogRouter.put('/:id', (request, response, next) => {
     likes: body.likes,
   };
 
-  Blog.findByIdAndUpdate(request.params.id, blog, {new: true})
-      .then((updatedBlog) => {
-        response.json(updatedBlog);
-      })
-      .catch((error) => next(error));
+  Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+    .then((updatedBlog) => {
+      response.json(updatedBlog);
+    })
+    .catch((error) => next(error));
 });
 
 module.exports = blogRouter;
