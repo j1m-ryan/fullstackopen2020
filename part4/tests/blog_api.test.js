@@ -17,6 +17,16 @@ test("unique identifier property of the blog posts is named id", async () => {
     }
 })
 
+test("making an HTTP POST request to the /api/blogs url successfully creates a new blog post", async () => {
+    const newPost = {
+        title: "Test title",
+        author: "Test author",
+        url: "https://www.test.com",
+        likes: 100,
+    }
+    await api.post("/api/blogs").send(newPost).expect(201).expect("Content-Type", /application\/json/)
+})
+
 afterAll(() => {
     mongoose.connection.close();
 })
