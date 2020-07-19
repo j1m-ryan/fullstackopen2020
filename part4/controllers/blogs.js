@@ -7,23 +7,17 @@ blogRouter.use(jsonParser);
 blogRouter.get('/', async (request, response,) => {
   console.log('getting all blog posts');
   const blogs = await Blog.find({})
-    .lean()
-    .exec()
+
   response.status(200).json(blogs);
 
 });
-blogRouter.get('/:id', async (request, response, next) => {
-  console.log('getting just one blog posts');
-  await Blog.findById(request.params.id)
-    .lean()
-    .exec()
-    .then((blog) => {
-      response.json(blog);
-    })
-    .catch((error) => next(error));
+blogRouter.get('/:id', async (request, response,) => {
+  const blog = await Blog.findById(request.params.id)
+
+  response.status(200).json(blog);
 });
 
-blogRouter.post('/', async (request, response, next) => {
+blogRouter.post('/', async (request, response) => {
   console.log('posting a blog post by', request.body.author);
   const body = request.body;
   console.log(body);
@@ -35,12 +29,9 @@ blogRouter.post('/', async (request, response, next) => {
     likes: body.likes,
   });
 
-  await blog
-    .save()
-    .then((result) => {
-      response.status(201).json(result);
-    })
-    .catch((error) => next(error));
+  const result = await blog.save()
+  response.status(201).json(result)
+
 });
 
 blogRouter.delete('/:id', (request, response, next) => {
