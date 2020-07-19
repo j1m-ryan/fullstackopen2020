@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const supertest = require("supertest");
 const app = require("../app");
+const { response } = require("../app");
 const api = supertest(app);
 
 test("blogs are successfully returned", async () => {
@@ -25,6 +26,19 @@ test("making an HTTP POST request to the /api/blogs url successfully creates a n
         likes: 100,
     }
     await api.post("/api/blogs").send(newPost).expect(201).expect("Content-Type", /application\/json/)
+})
+
+test("if the likes property is missing from the request, it will default to the value 0", async () => {
+    const newPost = {
+        title: "Test title",
+        author: "Test author",
+        url: "https://www.test.com"
+    }
+    await api.post("/api/blogs").send(newPost).set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201).then(response => {
+            expect(response.body.likes).toBe(0)
+        })
 })
 
 afterAll(() => {
