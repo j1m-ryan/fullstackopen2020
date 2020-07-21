@@ -1,12 +1,13 @@
 const blogRouter = require('express').Router();
 const Blog = require('../models/blog');
+const User = require("../models/user")
 require("express-async-errors");
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 blogRouter.use(jsonParser);
 blogRouter.get('/', async (request, response,) => {
   console.log('getting all blog posts');
-  const blogs = await Blog.find({})
+  const blogs = await Blog.find({}).populate("user")
 
   response.status(200).json(blogs);
 
@@ -25,12 +26,17 @@ blogRouter.post('/', async (request, response) => {
     return response.sendStatus(400)
 
   }
+  const user = await User.findOne({})
   const blog = Blog({
     title: body.title,
     author: body.author,
     url: body.url,
     likes: body.likes || 0,
+    user: user
   });
+
+  user.blogList = user.blogList.concat(blog._id)
+  await user.save()
 
   const result = await blog.save()
   response.status(201).json(result)
