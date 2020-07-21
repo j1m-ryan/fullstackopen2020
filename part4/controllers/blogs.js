@@ -2,17 +2,12 @@ const blogRouter = require('express').Router();
 const Blog = require('../models/blog');
 const User = require('../models/user');
 const jwt = require("jsonwebtoken")
+const { getTokenFrom } = require("../utils/middleware")
 require('express-async-errors');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 blogRouter.use(jsonParser);
-const getTokenFrom = (request) => {
-  const authorization = request.get('authorization');
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7);
-  }
-  return null;
-};
+
 
 blogRouter.get('/', async (request, response) => {
   console.log('getting all blog posts');
