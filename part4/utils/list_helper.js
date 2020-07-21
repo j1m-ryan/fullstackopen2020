@@ -1,4 +1,4 @@
-const e = require("express");
+const e = require('express');
 
 const dummy = (blogs) => {
   return 1;
@@ -49,7 +49,7 @@ const mostBlogs = (blogPosts) => {
       authorWithMostPosts = author[0];
     }
   }
-  return { author: authorWithMostPosts, blogs: myMap.get(authorWithMostPosts) };
+  return {author: authorWithMostPosts, blogs: myMap.get(authorWithMostPosts)};
 };
 
 const mostLikes = (blogPosts) => {
@@ -72,7 +72,7 @@ const mostLikes = (blogPosts) => {
       authorWithMostLikes = author[0];
     }
   }
-  return { author: authorWithMostLikes, likes: myMap.get(authorWithMostLikes) };
+  return {author: authorWithMostLikes, likes: myMap.get(authorWithMostLikes)};
 };
 
-module.exports = { dummy, totalLikes, favouriteBlog, mostBlogs, mostLikes };
+module.exports = {dummy, totalLikes, favouriteBlog, mostBlogs, mostLikes};

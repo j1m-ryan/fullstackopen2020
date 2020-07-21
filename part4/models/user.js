@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken')
-const uniqueValidator = require("mongoose-unique-validator")
+const jwt = require('jsonwebtoken');
+const uniqueValidator = require('mongoose-unique-validator');
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -18,20 +18,20 @@ const userSchema = mongoose.Schema({
   },
   blogList: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Blog"
-  }]
+    ref: 'Blog',
+  }],
 
 });
 
-userSchema.set("toJSON", {
+userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject.password;
     delete returnedObject._id;
     delete returnedObject.__v;
-  }
-})
-userSchema.plugin(uniqueValidator)
+  },
+});
+userSchema.plugin(uniqueValidator);
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

@@ -1,19 +1,19 @@
-const { palindrome } = require("../utils/for_testing");
+const {palindrome} = require('../utils/for_testing');
 
-test("palinfrom of a ", () => {
-  const result = palindrome("a");
+test('palinfrom of a ', () => {
+  const result = palindrome('a');
 
-  expect(result).toBe("a");
+  expect(result).toBe('a');
 });
 
-test("palindrome of react", () => {
-  const result = palindrome("react");
+test('palindrome of react', () => {
+  const result = palindrome('react');
 
-  expect(result).toBe("tcaer");
+  expect(result).toBe('tcaer');
 });
 
-test("palindrome of releveler", () => {
-  result = palindrome("releveler");
+test('palindrome of releveler', () => {
+  result = palindrome('releveler');
 
-  expect(result).toBe("releveler");
+  expect(result).toBe('releveler');
 });

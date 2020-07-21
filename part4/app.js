@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const { MONGODB_URI } = require('./utils/config');
+const {MONGODB_URI} = require('./utils/config');
 const blogRouter = require('./controllers/blogs');
-const userListRouter = require("./controllers/userListRouter");
+const userListRouter = require('./controllers/userListRouter');
 const middleware = require('./utils/middleware');
 const usersRouter = require('./controllers/usersRouter');
-const loginRouter = require("./controllers/loginRouter")
+const loginRouter = require('./controllers/loginRouter');
 app.use(middleware.logging);
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
