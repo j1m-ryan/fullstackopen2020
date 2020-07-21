@@ -52,9 +52,22 @@ blogRouter.post('/', async (request, response) => {
 });
 
 blogRouter.delete('/:id', async (request, response) => {
-  await Blog.findByIdAndRemove(request.params.id);
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
 
-  response.status(204).send({ status: 'deleted' });
+  const blog = await Blog.findById(request.params.id).populate("user");
+  if (blog.user.username == decodedToken.username) {
+    await Blog.findByIdAndDelete(request.params.id);
+    response.status(204).json({ status: 'deleted' });
+  } else {
+    response.status(402).send({ status: 'unauthorized' });
+  }
+
 });
 
 blogRouter.put('/:id', async (request, response) => {
